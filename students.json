@@ -1,0 +1,52 @@
+{
+  "S001": {
+    "name": "Aarav Sharma",
+    "city": "Delhi",
+    "age": 20,
+    "gender": "male",
+    "major": "Computer Science",
+    "gpa": 3.8,
+    "attendance": 95,
+    "verdict": "Excellent"
+  },
+  "S002": {
+    "name": "Priya Patel",
+    "city": "Ahmedabad",
+    "age": 19,
+    "gender": "female",
+    "major": "Mechanical Engineering",
+    "gpa": 2.4,
+    "attendance": 70,
+    "verdict": "Needs Improvement"
+  },
+  "S003": {
+    "name": "Rohan Das",
+    "city": "Bangalore",
+    "age": 21,
+    "gender": "male",
+    "major": "Physics",
+    "gpa": 3.2,
+    "attendance": 88,
+    "verdict": "Good"
+  },
+  "S004": {
+    "name": "Kavya Reddy",
+    "city": "Hyderabad",
+    "age": 20,
+    "gender": "female",
+    "major": "Mathematics",
+    "gpa": 3.9,
+    "attendance": 98,
+    "verdict": "Excellent"
+  },
+  "S005": {
+    "name": "Vikram Singh",
+    "city": "Jaipur",
+    "age": 22,
+    "gender": "male",
+    "major": "Literature",
+    "gpa": 1.8,
+    "attendance": 55,
+    "verdict": "Probation"
+  }
+}
