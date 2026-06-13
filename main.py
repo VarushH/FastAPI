@@ -23,7 +23,17 @@ class Student(BaseModel):
     gender: str
     major: str
     gpa: float
-    attendace: int
+    attendance: int
+    verdict: str
+
+class StudentUpdate(BaseModel):
+    name: str
+    city: str
+    age: int
+    gender: str
+    major: str
+    gpa: float
+    attendance: int
     verdict: str
 
 class CreateStudentRepsonse(BaseModel):
@@ -52,14 +62,14 @@ def view_student(student_id: str = Path(..., description = 'ID of the student in
     raise HTTPException(status_code=404,detail='Student not found')
 
 @app.post('/create')
-def create_patient(student: Student):
+def create_student(student: Student):
 
     #load existing data
     data = load_data()
 
     #check if the student already exists
     if student.id in data:
-        raise HTTPException(status_code = 400, detail = 'Patient already exists')
+        raise HTTPException(status_code = 400, detail = 'Student already exists')
     
     data[student.id] = student.model_dump(exclude=['id'])
 
@@ -69,3 +79,50 @@ def create_patient(student: Student):
     return CreateStudentRepsonse(
         message= 'Student added successfully'
     )
+
+@app.put('/edit/{student_id}')
+def update_student(student_id:str, student_update: StudentUpdate):
+
+    #Load the existing data
+    data = load_data()
+
+    if student_id not in data:
+        raise HTTPException(status_code=404, detail='Student not found')
+
+
+    existing_student_info = data[student_id]
+
+    updated_student_info = student_update.model_dump(exclude_unset=True)
+    print(f'Updated Student Info {updated_student_info}')
+
+    for key, value in updated_student_info.items():
+        existing_student_info[key] = value
+
+    existing_student_info['id'] = student_id
+    student_pydandic_obj = Student(**existing_student_info)
+    #-> pydantic object -> dict
+    existing_student_info = student_pydandic_obj.model_dump(exclude='id')
+
+    # add this dict to data
+    data[student_id] = existing_student_info
+    print(data[student_id])
+    # save data
+    save_data(data)
+
+    return JSONResponse(status_code=200, content={'message':'Student updated'})
+
+
+@app.delete('/delete/{student_id}')
+def delete_student(student_id: str):
+
+    # load data
+    data = load_data()
+
+    if student_id not in data:
+        raise HTTPException(status_code=404, detail='Student not found')
+    
+    del data[student_id]
+
+    save_data(data)
+
+    return JSONResponse(status_code=200, content={'message':'Student deleted'})
